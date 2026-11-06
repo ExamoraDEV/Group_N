@@ -1,1 +1,16 @@
-{}
+
+{
+  "name": "examora",
+  "version": "1.0.0",
+  "private": true,
+ "scripts": {
+  "setup": "npm install && npm install --prefix university-exam-platform/client && npm install --prefix university-exam-platform/server",
+  "dev": "concurrently -k \"npm run dev --prefix university-exam-platform/client\" \"npm run dev --prefix university-exam-platform/server\"",
+  "build": "npm run build --prefix university-exam-platform/client",
+  "test": "npm test --prefix university-exam-platform/server"
+},
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}
+
