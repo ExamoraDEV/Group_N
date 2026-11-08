@@ -214,9 +214,9 @@ function Home() {
             </div>
           </div>
 
-          <a href="#features" className="text-link">
+          <Link to="/features" className="text-link">
             Explore our features <span>→</span>
-          </a>
+          </Link>
         </div>
       </section>
 
@@ -243,9 +243,9 @@ function Home() {
 
                 <p>{feature.description}</p>
 
-                <a href="#how-it-works" className="feature-link">
+                <Link to="/features" className="feature-link">
                   Learn more <span>→</span>
-                </a>
+                </Link>
               </article>
             ))}
           </div>
