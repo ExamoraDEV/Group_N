@@ -165,7 +165,7 @@ export default function LecturerDashboard({ theme, onToggleTheme }) {
   return <div className="lect-app">
     <aside className={`lect-sidebar ${menuOpen ? "open" : ""}`}>
       <Link to="/lecturer/dashboard" className="lect-brand" onClick={() => setMenuOpen(false)}>
-        <img src="/examora-logo.jpeg" alt="" />
+        <img src={`${import.meta.env.BASE_URL}examora-logo.jpeg`} alt="" />
         <span>Examora<small>LECTURER PORTAL</small></span>
       </Link>
       <div className="lect-nav-caption">WORKSPACE</div>

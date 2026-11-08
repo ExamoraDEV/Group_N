@@ -116,7 +116,7 @@ export default function AdminPortal({ theme, onToggleTheme }) {
 
   return <div className="admin-shell">
     <aside className={`admin-sidebar ${menuOpen ? "open" : ""}`}>
-      <Link to="/admin/dashboard" className="admin-brand" onClick={() => setMenuOpen(false)}><img src="/examora-logo.jpeg" alt=""/><span>Examora<small>ADMIN PORTAL</small></span></Link>
+      <Link to="/admin/dashboard" className="admin-brand" onClick={() => setMenuOpen(false)}><img src={`${import.meta.env.BASE_URL}examora-logo.jpeg`} alt=""/><span>Examora<small>ADMIN PORTAL</small></span></Link>
       <p className="admin-nav-caption">ADMINISTRATION</p>
       <nav aria-label="Admin navigation">{NAV.map(([label, href, Icon]) => <NavLink key={href} to={href} onClick={() => { setMenuOpen(false); setNotice(""); setError(""); setSearch(""); setStatusFilter("all"); }} className={({ isActive }) => `admin-nav-link ${isActive ? "active" : ""}`}><Icon size={17}/><span>{label}</span></NavLink>)}</nav>
       <div className="admin-profile"><span className="admin-avatar"><Shield size={18}/></span><span><b>{user?.name || "Administrator"}</b><small>{user?.email}</small></span><button type="button" onClick={logout} title="Log out" aria-label="Log out"><LogOut size={16}/></button></div>
