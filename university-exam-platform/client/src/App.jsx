@@ -1,8 +1,9 @@
 
 import { useEffect, useState } from "react";
-import { Link, Route, Routes } from "react-router-dom";
+import { Link, Route, Routes, useLocation } from "react-router-dom";
 import "./App.css";
 import Home from "./pages/Home";
+import Features from "./pages/Features";
 import SignIn, { ForgotPasswordPlaceholder, SignUpPlaceholder } from "./pages/SignIn";
 import StudentDashboard from "./pages/StudentDashboard";
 import LecturerDashboard from "./pages/LecturerDashboard";
@@ -11,6 +12,20 @@ import AdminPortal from "./pages/AdminPortal";
 import ProtectedRoute from "./auth/ProtectedRoute";
 
 const THEME_KEY = "examora-theme";
+
+function ScrollToTop() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "instant",
+    });
+  }, [pathname]);
+
+  return null;
+}
 
 function App() {
   const [theme, setTheme] = useState(() => {
@@ -37,7 +52,10 @@ function App() {
   };
 
   return (
-    <Routes>
+    <>
+      <ScrollToTop />
+
+      <Routes>
       <Route
         path="/"
         element={
@@ -124,6 +142,7 @@ function App() {
           </div>
         }
       />
+      <Route path="/features" element={<div className="app"><Features theme={theme} onToggleTheme={toggleTheme} /></div>} />
       <Route path="/signin" element={<SignIn />} />
       <Route path="/student/exams/:examId/attempt" element={<ProtectedRoute role="student"><StudentExamPage /></ProtectedRoute>} />
       <Route
@@ -134,7 +153,8 @@ function App() {
       <Route path="/admin/*" element={<ProtectedRoute role="admin"><AdminPortal theme={theme} onToggleTheme={toggleTheme} /></ProtectedRoute>} />
       <Route path="/signup" element={<SignUpPlaceholder />} />
       <Route path="/forgot-password" element={<ForgotPasswordPlaceholder />} />
-    </Routes>
+      </Routes>
+    </>
   );
 }
 
