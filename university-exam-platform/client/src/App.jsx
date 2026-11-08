@@ -52,11 +52,11 @@ function App() {
             <header className="navbar">
               <div className="container navbar-inner">
                 <Link to="/" className="brand" aria-label="Examora home">
-                  <img
-                    src="/examora-logo.jpeg"
-                    alt="Examora logo"
-                    className="brand-logo"
-                  />
+                    <img
+                      src={`${import.meta.env.BASE_URL}examora-logo.jpeg`}
+                      alt="Examora logo"
+                      className="brand-logo"
+                    />
                   <span>Examora</span>
                 </Link>
 
@@ -90,7 +90,7 @@ function App() {
               <div className="container footer-inner">
                 <Link to="/" className="brand footer-brand" aria-label="Examora home">
                   <img
-                    src="/examora-logo.jpeg"
+                    src={`${import.meta.env.BASE_URL}examora-logo.jpeg`}
                     alt="Examora logo"
                     className="brand-logo"
                   />
