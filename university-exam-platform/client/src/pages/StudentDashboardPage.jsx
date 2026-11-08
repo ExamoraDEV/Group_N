@@ -499,7 +499,7 @@ function StudentDashboardPage({ theme, onToggleTheme }) {
       {sidebarOpen && <button className="student-sidebar-backdrop" type="button" aria-label="Close navigation" onClick={() => setSidebarOpen(false)} />}
       <aside className={`student-workspace-sidebar ${sidebarOpen ? "is-open" : ""}`}>
         <Link to="/student/dashboard" className="student-workspace-brand" onClick={() => setSidebarOpen(false)}>
-          <img src="/examora-logo.jpeg" alt="" />
+          <img src={`${import.meta.env.BASE_URL}examora-logo.jpeg`} alt="" />
           <span>Examora<small>STUDENT PORTAL</small></span>
         </Link>
         <div className="student-nav-caption">ACADEMIC</div>

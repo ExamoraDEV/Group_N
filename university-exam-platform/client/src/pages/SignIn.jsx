@@ -146,7 +146,7 @@ function SignIn() {
       <div className="signin-shell">
         <div className="signin-card">
           <div className="signin-brand" aria-label="Examora home">
-            <img src="/examora-logo.jpeg" alt="Examora logo" className="brand-logo" />
+            <img src={`${import.meta.env.BASE_URL}examora-logo.jpeg`} alt="Examora logo" className="brand-logo" />
             <span>Examora</span>
           </div>
 
