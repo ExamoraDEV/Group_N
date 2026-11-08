@@ -1,30 +1,10 @@
-const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || "";
+import { apiFetch } from "./apiClient";
 
 async function request(path, options = {}) {
-  const controller = new AbortController();
-  const timeout = window.setTimeout(() => controller.abort(), 15000);
-  let response;
-  try {
-    response = await fetch(`${apiBaseUrl}${path}`, {
-      ...options,
-      credentials: "include",
-      signal: controller.signal,
-      headers: {
-        ...(options.body ? { "Content-Type": "application/json" } : {}),
-        ...options.headers,
-      },
-    });
-  } catch (error) {
-    if (controller.signal.aborted) {
-      throw new Error("The student service timed out. Check the backend and database connection.", { cause: error });
-    }
-    if (error instanceof TypeError) {
-      error.message = "Unable to reach the student service. Check the backend connection.";
-    }
-    throw error;
-  } finally {
-    window.clearTimeout(timeout);
-  }
+  const response = await apiFetch(path, {
+    ...options,
+    headers: { ...(options.body ? { "Content-Type": "application/json" } : {}), ...options.headers },
+  });
 
   const data = await response.json().catch(() => ({}));
   if (!response.ok) {

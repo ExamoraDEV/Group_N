@@ -2,9 +2,9 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import { Activity, AlertCircle, ArrowRight, Check, CheckCircle2, Clock3, GraduationCap, LayoutDashboard, LogOut, Menu, Moon, Plus, RefreshCw, Search, Shield, Sun, UserRound, Users, UserRoundPlus, UserX, X } from "lucide-react";
 import { useAuth } from "../auth/useAuth";
+import { apiFetch } from "../services/apiClient";
 import "./AdminPortal.css";
 
-const API = import.meta.env.VITE_API_BASE_URL || "";
 const NAV = [
   ["Dashboard", "/admin/dashboard", LayoutDashboard],
   ["Create Lecturer Account", "/admin/create/lecturer", UserRoundPlus],
@@ -21,7 +21,7 @@ const accountId = (row) => row.role === "lecturer" ? row.lecturerId : row.studen
 const accountLabel = (role) => role === "lecturer" ? "Lecturer" : "Student";
 
 async function request(path, init = {}) {
-  const response = await fetch(`${API}/api/admin${path}`, { credentials: "include", ...init, headers: { ...(init.body ? { "Content-Type": "application/json" } : {}), ...(init.headers || {}) } });
+  const response = await apiFetch(`/api/admin${path}`, { ...init, headers: { ...(init.body ? { "Content-Type": "application/json" } : {}), ...(init.headers || {}) } });
   const data = await response.json().catch(() => ({}));
   if (!response.ok) throw new Error(data.message || "The account request could not be completed.");
   return data;
@@ -81,7 +81,7 @@ export default function AdminPortal({ theme, onToggleTheme }) {
   useEffect(() => { const timer = window.setTimeout(() => load(), 140); return () => window.clearTimeout(timer); }, [load]);
 
   const logout = async () => {
-    try { await fetch(`${API}/api/auth/logout`, { method: "POST", credentials: "include" }); }
+    try { await apiFetch("/api/auth/logout", { method: "POST" }); }
     finally { setAuthenticatedUser(null); navigate("/signin", { replace: true }); }
   };
 

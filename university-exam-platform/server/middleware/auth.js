@@ -4,13 +4,17 @@ const User = require("../models/User");
 const { emailMatchesRole } = require("../auth/emailPolicy");
 
 const COOKIE_NAME = "examora_session";
-const COOKIE_OPTIONS = {
-  httpOnly: true,
-  secure: process.env.NODE_ENV === "production",
-  sameSite: "lax",
-  path: "/",
-  maxAge: 8 * 60 * 60 * 1000,
-};
+function createCookieOptions(env = process.env) {
+  const production = env.NODE_ENV === "production";
+  return {
+    httpOnly: true,
+    secure: production,
+    sameSite: production ? "none" : "lax",
+    path: "/",
+    maxAge: 8 * 60 * 60 * 1000,
+  };
+}
+const COOKIE_OPTIONS = createCookieOptions();
 
 function hasJwtSecret() {
   return typeof process.env.JWT_SECRET === "string" && process.env.JWT_SECRET.length >= 32;
@@ -93,6 +97,7 @@ function requireRole(role) {
 module.exports = {
   COOKIE_NAME,
   COOKIE_OPTIONS,
+  createCookieOptions,
   clearSessionCookie,
   hasJwtSecret,
   requireAuth,

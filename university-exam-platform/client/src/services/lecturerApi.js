@@ -1,10 +1,11 @@
+import { apiFetch, apiBaseUrl } from "./apiClient";
+export { apiBaseUrl };
+
 const API = "/api/lecturer";
-export const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || "";
 
 export async function lecturerRequest(path, options = {}) {
   const requestUrl = path.startsWith("/auth/") ? `/api${path}` : `${API}${path}`;
-  const response = await fetch(`${apiBaseUrl}${requestUrl}`, {
-    credentials: "include",
+  const response = await apiFetch(requestUrl, {
     ...options,
     headers: { ...(options.body ? { "Content-Type": "application/json" } : {}), ...options.headers },
   });

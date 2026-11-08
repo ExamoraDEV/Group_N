@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { AuthContext } from "./authContext";
-const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || "";
+import { apiFetchJson } from "../services/apiClient";
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
@@ -11,14 +11,13 @@ export function AuthProvider({ children }) {
     const generation = ++requestGeneration.current;
     setStatus("loading");
     try {
-      const response = await fetch(`${apiBaseUrl}/api/auth/me`, { credentials: "include" });
+      const { response, data } = await apiFetchJson("/api/auth/me", {}, 65000);
       if (generation !== requestGeneration.current) return null;
       if (!response.ok) {
         setUser(null);
         setStatus("anonymous");
         return null;
       }
-      const data = await response.json();
       if (generation !== requestGeneration.current) return null;
       setUser(data.user || null);
       setStatus(data.user ? "authenticated" : "anonymous");
@@ -34,8 +33,8 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     let active = true;
     const generation = ++requestGeneration.current;
-    fetch(`${apiBaseUrl}/api/auth/me`, { credentials: "include" })
-      .then(async (response) => response.ok ? response.json() : null)
+    apiFetchJson("/api/auth/me", {}, 65000)
+      .then(({ response, data }) => response.ok ? data : null)
       .then((data) => {
         if (!active || generation !== requestGeneration.current) return;
         setUser(data?.user || null);

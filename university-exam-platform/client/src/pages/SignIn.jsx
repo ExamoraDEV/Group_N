@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Info } from "lucide-react";
 import { useAuth } from "../auth/useAuth";
+import { apiFetchJson } from "../services/apiClient";
 
 const initialState = {
   email: "",
@@ -15,39 +16,23 @@ const dashboardRoutes = {
 };
 
 async function loginUser(email, password) {
-  const baseUrl = import.meta.env.VITE_API_BASE_URL || "";
+  const { response, data } = await apiFetchJson("/api/auth/login", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email, password }),
+  }, 65000);
 
-  try {
-    const response = await fetch(`${baseUrl}/api/auth/login`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      credentials: "include",
-      body: JSON.stringify({ email, password }),
-    });
-
-    const data = await response.json().catch(() => ({}));
-
-    if (!response.ok) {
-      const error = new Error(
-        data.message ||
-          data.error ||
-          "Invalid email or password. Please try again."
-      );
-      error.code = data.code;
-      throw error;
-    }
-
-    return data;
-  } catch (error) {
-    if (error instanceof TypeError) {
-      throw new Error(
-        "Unable to reach the authentication server. Please check the backend connection.",
-        { cause: error }
-      );
-    }
-
+  if (!response.ok) {
+    const error = new Error(
+      data.message ||
+        data.error ||
+        "Invalid email or password. Please try again."
+    );
+    error.code = data.code;
     throw error;
   }
+
+  return data;
 }
 
 function SignIn() {

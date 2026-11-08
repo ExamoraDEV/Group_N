@@ -1,6 +1,5 @@
 
 const express = require("express");
-const cors = require("cors");
 const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
 const bcrypt = require("bcryptjs");
@@ -12,6 +11,7 @@ const lecturerRoutes = require("./routes/lecturer");
 const { startExamLifecycleWorker } = require("./services/examLifecycleWorker");
 const { redirectForRole } = require("./auth/emailPolicy");
 const { authenticateCredentials, validLoginInput } = require("./auth/loginService");
+const { cors, createCorsOptions } = require("./middleware/corsConfig");
 const {
   COOKIE_NAME,
   COOKIE_OPTIONS,
@@ -22,37 +22,7 @@ const {
 } = require("./middleware/auth");
 
 const app = express();
-const allowedOrigins = new Set(
-  [
-    process.env.CLIENT_ORIGIN,
-    "http://localhost:5173",
-    "http://127.0.0.1:5173",
-    "http://localhost:5174",
-    "http://127.0.0.1:5174",
-  ].filter(Boolean)
-);
-function isLocalDevelopmentOrigin(origin) {
-  if (process.env.NODE_ENV === "production") return false;
-  try {
-    const parsed = new URL(origin);
-    return parsed.protocol === "http:" && ["localhost", "127.0.0.1"].includes(parsed.hostname);
-  } catch {
-    return false;
-  }
-}
-
-app.use(
-  cors({
-    origin(origin, callback) {
-      if (!origin || allowedOrigins.has(origin) || isLocalDevelopmentOrigin(origin)) {
-        return callback(null, true);
-      }
-
-      return callback(new Error("Origin is not allowed by CORS."));
-    },
-    credentials: true,
-  })
-);
+app.use(cors(createCorsOptions()));
 app.use(express.json());
 app.use(cookieParser());
 
