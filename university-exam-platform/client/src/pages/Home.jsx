@@ -296,7 +296,18 @@ function Home() {
           </p>
         </div>
 
-        <a className="button button-light" href="#home">
+        <a
+          className="button button-light"
+          href="#home"
+          onClick={(e) => {
+            e.preventDefault();
+
+            document.getElementById("home")?.scrollIntoView({
+              behavior: "smooth",
+              block: "start",
+            });
+          }}
+        >
           Explore the Platform <span>→</span>
         </a>
       </section>

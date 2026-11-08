@@ -61,10 +61,25 @@ function App() {
                 </Link>
 
                 <nav className="nav-links" aria-label="Main navigation">
-                  <a href="#home">Home</a>
-                  <a href="#about">About</a>
-                  <a href="#features">Features</a>
-                  <a href="#how-it-works">How It Works</a>
+                  <a href="#home" onClick={(e) => {
+                    e.preventDefault();
+                    document.getElementById("home")?.scrollIntoView({ behavior: "smooth" });
+                  }}>Home</a>
+
+                  <a href="#about" onClick={(e) => {
+                    e.preventDefault();
+                    document.getElementById("about")?.scrollIntoView({ behavior: "smooth" });
+                  }}>About</a>
+
+                  <a href="#features" onClick={(e) => {
+                    e.preventDefault();
+                    document.getElementById("features")?.scrollIntoView({ behavior: "smooth" });
+                  }}>Features</a>
+
+                  <a href="#how-it-works" onClick={(e) => {
+                    e.preventDefault();
+                    document.getElementById("how-it-works")?.scrollIntoView({ behavior: "smooth" });
+                  }}>How It Works</a>
                 </nav>
 
                 <div className="nav-actions">
