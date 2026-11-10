@@ -33,9 +33,13 @@ demonstration.
   Role            Demo email                   Password
   --------------- --------------------------- ------------------
   Student         `22STD001@university.edu`   1234
+  
   Student         `22STD004@university.edu`   12345678900
+  
   Lecturer        `LEC001@university.edu`     1234
+  
   Lecturer        `LEC004@university.edu`     12345678900
+  
   Administrator   `ADMIN001@university.edu`   12345678     (You can create Student , Lecturer account from Administrator acoount)
 
 
