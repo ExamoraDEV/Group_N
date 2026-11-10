@@ -30,7 +30,7 @@ University Exam Platform API is running!
 The following demo account email addresses were supplied for project
 demonstration.
 
-  Role            Demo email                   Password
+  Role      ,      Demo email           ,        Password
   --------------- --------------------------- ------------------
   Student         `22STD001@university.edu`   1234
   
@@ -40,7 +40,8 @@ demonstration.
   
   Lecturer        `LEC004@university.edu`     12345678900
   
-  Administrator   `ADMIN001@university.edu`   12345678     (You can create Student , Lecturer account from Administrator acoount)
+  Administrator   `ADMIN001@university.edu`   12345678   
+  (You can create Student , Lecturer account from Administrator acoount)
 
 
 ## What Each Account Can Do
